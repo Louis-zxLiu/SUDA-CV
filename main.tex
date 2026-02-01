@@ -1,0 +1,240 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[fontset=none]{ctex}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancybox}
+
+% 使用 Google Fonts 的 Material Symbols 图标库
+\usepackage{material-symbols}
+
+\hypersetup{hidelinks}
+
+%%%%%%%%%%%%%%%%%%%%
+% 全局样式设置
+%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0pt}					% 取消全局段落缩进
+\pagenumbering{gobble}						% 取消页码显示
+\setlist[itemize]{nosep                     % 取消 itemize 的默认间距
+    , before={\vspace*{-\parskip}}          % 取消 itemize 和后续段落之间的空白
+    , leftmargin=*}		                    % 取消 itemize 的左边距
+\setlist[enumerate]{leftmargin=*}	        % 取消 enumerate 的左边距
+\renewcommand{\arraystretch}{1.2}           % 设置表格行间距
+\linespread{1.25}                           % 设置正文行间距
+
+% 苏州大学色彩定义
+\definecolor{suda_red}{RGB}{175, 37, 28}    % 苏大红
+\definecolor{primary_color}{named}{suda_red}
+\definecolor{secondary_color}{named}{suda_red}
+
+% 章节标题样式设置
+\titleformat{\section}
+  {\LARGE\bfseries\raggedright} 		      % 标题字体：大号、加粗、左对齐
+  {}{0em}                      			  % 无序号
+  {}                           			  
+  [{\color{secondary_color}\titlerule}]     % 标题下方装饰线
+\titlespacing*{\section}{0cm}{*1.2}{*1.2}	% 标题边距：左、上、下
+
+\usepackage[
+	a4paper,
+	left=1.2cm,
+	right=1.2cm,
+	top=1.5cm,
+	bottom=1cm,
+	nohead
+]{geometry}                                 % 页面边距设置
+
+% 字体配置 (需确保 fonts 目录下存在对应文件)
+\setmainfont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=*-Bold,
+]{NotoSerifSC}
+
+\setCJKmainfont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=*-Bold,
+]{NotoSerifSC}
+
+\newlength{\iconwidth}
+\setlength{\iconwidth}{1.5em}                   % 章节图标占用的宽度
+
+%%%%%%%%%%%%%%%%%%%%
+% 个人信息宏定义
+%%%%%%%%%%%%%%%%%%%%
+
+% 所在学院/单位
+\newcommand{\school}{计算机科学与技术学院 | School of Computer Science and Technology} 
+
+% 联系方式页脚内容
+\newcommand{\contact}{
+    \footnotesize
+    \textcolor{white}{
+        % 邮箱
+        \href{mailto:yourname@suda.edu.cn}{{\normalsize\mSymbol{mail}}\quad yourname@suda.edu.cn}
+        \hspace{4em}
+        % 手机号
+        \href{tel:138-0000-0000}{{\normalsize\mSymbol{call}}\quad 138-0000-0000}
+        % GitHub/个人主页
+        \hspace{4em}
+        \href{https://github.com/yourusername}{{\normalsize\mSymbol{package-2}}\quad GitHub: yourusername}
+    }
+}
+
+\begin{document}
+
+    %%%%%%%%%%%%%%%%%%%%
+    % 视觉元素 (页眉、页脚、水印)
+    %%%%%%%%%%%%%%%%%%%%
+
+    % 页眉：苏大红背景条 + 校徽 + 学院名
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[suda_red] (current page.north west) rectangle ([yshift=-2.5cm]current page.north east);
+        
+        % 校徽：圆形白底包裹
+        \node[anchor=west, fill=white, inner sep=0pt, circle](school_logo) at ([shift={(0.8cm,-1.25cm)}]current page.north west){
+            \includegraphics[height=1.5cm]{figs/suda_logo.pdf}
+        };
+        
+        % 学院名称显示
+        \node[anchor=east](school_name) at ([shift={(-0.8cm,-1.25cm)}]current page.north east){
+            \textcolor{white}{\textbf{\school}}
+        };
+    \end{tikzpicture}
+    \vspace{0.5em}
+
+    % 页脚：联系方式背景条
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[suda_red] (current page.south west) rectangle ([yshift=1.2cm]current page.south east);
+        \node[anchor=center] at ([yshift=0.6cm]current page.south){\contact};
+    \end{tikzpicture}
+
+    % 背景水印：苏州大学校徽 (低透明度)
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[opacity=0.06] at(current page.center){
+            \includegraphics[width=0.7\paperwidth, keepaspectratio]{figs/suda_logo.pdf}
+        };
+    \end{tikzpicture}
+
+    %%%%%%%%%%%%%%%%%%%%
+    % 简历正文
+    %%%%%%%%%%%%%%%%%%%%
+
+    \vspace{2.5em} % 避开页眉装饰条
+
+    \begin{minipage}[t]{0.78\textwidth}
+        % 个人基本信息
+        \begin{minipage}[t]{\textwidth}
+        \section[个人信息]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{badge}}}\quad 个人信息}
+        \begin{minipage}[t]{0.5\textwidth}
+            \textbf{姓\qquad 名}：苏小大
+            
+            \vspace{0.5em}
+            \textbf{出生年月}：1900年5月
+        \end{minipage}
+        \begin{minipage}[t]{0.35\textwidth}
+            \textbf{性\qquad 别}：男
+            
+            \vspace{0.5em}
+            \textbf{政治面貌}：中共党员
+        \end{minipage}
+        \vspace{1.2em}
+        \end{minipage}
+
+        % 教育背景
+        \begin{minipage}[t]{\textwidth}
+        \section[教育背景]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{school}}}\quad 教育背景}
+        
+        {\large \textbf{苏州大学}}，本科 \hfill 2018年9月--2022年6月
+        \begin{itemize}
+            \item 计算机科学与技术学院，计算机科学与技术专业
+            \item \textbf{主修课程}：数据结构、操作系统、计算机网络、数据库系统等。
+            \item \textbf{GPA}：3.9 / 4.0（排名：5 / 150）
+        \end{itemize}
+        
+        \vspace{0.5em}
+        {\large \textbf{苏州大学}}，硕士 \hfill 2022年9月--至今
+        \begin{itemize}
+            \item 计算机科学与技术学院，软件工程专业，导师：某某教授
+            \item \textbf{研究方向}：人工智能、深度学习、自然语言处理等。
+        \end{itemize}
+        
+        \vspace{1.2em}
+        \end{minipage}
+    \end{minipage}
+    \hfill
+    % 个人照片展示
+    \begin{minipage}[t]{0.2\textwidth}
+        \vspace{2em}
+        \setlength{\fboxsep}{0pt}
+        \doublebox{\includegraphics[width=\linewidth]{images/avatar.png}}
+    \end{minipage}
+
+    \begin{minipage}[t]{\textwidth}
+    % 科研成果展示
+    \section[科研成果]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{contract-edit}}}\quad 科研成果}
+
+    Title of Your Research Paper Published in Top Venue.
+    \begin{itemize}
+        \item \textbf{Xiao-Da Su}, Professor Someone. \hfill 发表于 \textbf{NeurIPS 2024}
+        \item 简要描述该研究的主要贡献，例如提出了一种新型的神经网络架构，在多项基准测试中达到了 SOTA 性能。
+    \end{itemize}
+
+    \vspace{1.2em}
+    \end{minipage}
+
+    \begin{minipage}[t]{\textwidth}
+    % 竞赛获奖情况
+    \section[竞赛获奖]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{emoji-events}}}\quad 竞赛获奖}
+
+    \begin{itemize}
+        \item \textbf{第十八届“挑战杯”全国大学生课外学术科技作品竞赛} \hfill \textbf{全国特等奖} (2023年)
+        \item \textbf{美国大学生数学建模竞赛 (MCM/ICM)} \hfill \textbf{Finalist (特等奖提名)} (2022年)
+        \item \textbf{中国大学生计算机设计大赛} \hfill \textbf{一等奖} (2021年)
+    \end{itemize}
+
+    \vspace{1.2em}
+    \end{minipage}
+
+    \begin{minipage}[t]{\textwidth}
+    % 项目经历/社会实践
+    \section[项目经历]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{co-present}}}\quad 项目经历}
+    
+    {\large \textbf{智能苏州大学校园导航系统}} \hfill 2023年3月--2023年12月
+    \begin{itemize}
+        \item \textbf{项目负责人} \hfill 苏州大学大学生创新创业项目
+        \item 基于跨平台框架开发，实现了校园室内外无缝导航，服务学生超过 5000 人次。
+    \end{itemize}
+
+    \vspace{1.2em}
+    \end{minipage}
+    
+    % 底部两列布局：技能与兴趣
+    \begin{minipage}[t]{0.6\textwidth}
+        \section[技能特长]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{handyman}}}\quad 技能特长}
+        \begin{itemize}
+        \setlength{\itemsep}{0.5em}
+            \item 熟练掌握 C/C++、Python、Java 等开发语言。
+            \item 深入理解 PyTorch、TensorFlow 等主流深度学习框架。
+            \item 具备良好的英语读写能力（CET-6 600+）。
+        \end{itemize}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.35\textwidth}
+        \section[兴趣爱好]{\makebox[\iconwidth][c]{\color{primary_color}{\Huge\mSymbol{star}}}\quad 兴趣爱好}
+        \begin{itemize}
+        \setlength{\itemsep}{0.5em}
+            \item 摄影与后期处理
+            \item 马拉松长跑
+            \item 开源社区贡献
+        \end{itemize}
+    \end{minipage}
+    
+\end{document}
