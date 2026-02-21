@@ -1,5 +1,5 @@
 # SUDA-CV：苏州大学 LaTeX 中文简历模板
-
+## 必须使用 XeLaTeX 或 LuaLaTeX 编译
 ![](./docs/CV-preview.webp)
 
 ## 简介
